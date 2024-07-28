@@ -43,7 +43,7 @@ services:
 
   db:
     container_name: mysql
-    image: 42tokyo2407.azurecr.io/mysql:latest
+    build: ./mysql
     environment:
       MYSQL_ROOT_PASSWORD: mysql
       MYSQL_DATABASE: 42Tokyo-db
@@ -55,6 +55,7 @@ services:
       - ./mysql/init:/docker-entrypoint-initdb.d
       - ./mysql/conf.d:/etc/mysql/conf.d
       - ./mysql/migration:/etc/mysql/migration
+      - ./mysql/logs:/var/log/mysql/
     networks:
       - webapp-network
     healthcheck:
@@ -66,11 +67,12 @@ services:
 
   nginx:
     container_name: nginx
-    image: 42tokyo2407.azurecr.io/nginx:latest
+    build: ./nginx
     ports:
       - "80:80"
     volumes:
       - ./nginx/nginx.local.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx/
     networks:
       - webapp-network
     depends_on:

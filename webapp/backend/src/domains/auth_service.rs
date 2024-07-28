@@ -14,6 +14,7 @@ pub trait AuthRepository {
     async fn create_user(&self, username: &str, password: &str, role: &str)
         -> Result<(), AppError>;
     async fn find_user_by_id(&self, id: i32) -> Result<Option<User>, AppError>;
+    async fn fetch_username_by_id(&self, id: i32) -> Result<Option<String>, AppError>;
     async fn find_user_by_username(&self, username: &str) -> Result<Option<User>, AppError>;
     async fn create_dispatcher(&self, user_id: i32, area_id: i32) -> Result<(), AppError>;
     async fn find_dispatcher_by_id(&self, id: i32) -> Result<Option<Dispatcher>, AppError>;
